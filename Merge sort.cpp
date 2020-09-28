@@ -18,10 +18,10 @@ void merge(int arr[20], int first, int mid, int last)
     for(i = 0; i < n1; i++)
     {
         //Transfering values of original array to l(only the values of first half)
-        l[i] = arr[first + 1];
+        l[i] = arr[first + i];
     }
 
-    for(j = 0; j = n2; j++)
+    for(j = 0; j < n2; j++)
     {
         r[j] = arr[mid + 1 + j];
     }
@@ -51,7 +51,7 @@ void merge(int arr[20], int first, int mid, int last)
     {
         arr[k] = l[i];
         i++;
-        j++;
+        k++;
     }
 
     while(j < n2)
