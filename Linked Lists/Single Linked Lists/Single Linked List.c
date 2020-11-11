@@ -131,5 +131,38 @@ void display() {
 
 // 6. delete
 void del() {
+	struct node* temp;
+	int loc;
 	
+	printf("Enter the node location you want to delete: ");
+	scanf("%d", &loc);
+	
+	if(loc > len()) {
+		printf("\nINVALID LOCATION!!\n");
+	}
+	else if(loc == 1) {
+	
+		temp = root;
+		root = temp->link;
+		temp->link = NULL;
+		
+		free(temp);
+	}
+	else {
+		struct node* p;
+		struct node* q;
+		int i = 1;
+		
+		p = root;
+		
+		while(i < loc-1) {
+			p = p->link;
+			i++;
+		}
+		
+		q = p->link;
+		q->link = p->link;
+		q->link = NULL;
+		free(q);
+	}
 }
