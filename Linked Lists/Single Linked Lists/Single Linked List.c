@@ -90,7 +90,21 @@ void append() {
 
 // 2. Add at Begin
 void add_at_begin() {
+	struct node *temp;
 	
+	temp = (struct node*)malloc(sizeof(struct node));
+	
+	printf("Enter node data: ");
+	scanf("%d", &temp->data);
+	temp->link = NULL;
+	
+	if(root == NULL) {
+		root = temp;
+	}
+	else {
+		temp->link = root;
+		root = temp;
+	}
 }
 
 // 3. Add at after
