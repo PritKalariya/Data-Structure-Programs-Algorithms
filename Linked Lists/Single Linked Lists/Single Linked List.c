@@ -8,6 +8,7 @@ struct node {
 	struct node* link;
 };
 
+// root variable has the base address of the list. 
 struct node* root = NULL;
 
 // Prototypes
@@ -109,7 +110,38 @@ void add_at_begin() {
 
 // 3. Add at after
 void add_at_after() {
+	struct node* temp;
+	int loc, length;
 	
+	printf("Enter new node location: ");
+	scanf("%d", &loc);
+	
+	length = len();
+	
+	if(loc > length) {
+		printf("\nINVALID LOCATION\n");
+	}
+	else {
+		struct node* p;
+		int i = 1;
+		
+		p = root;
+		
+		while(i < loc) {
+			p = p->link;
+			i++;
+		}
+		
+		printf("\nEnter node data: ");
+		scanf("%d", &temp->data);
+		temp->link = NULL;
+		
+		// Insertion
+		temp->link = p->link;
+		p->link = temp;
+		
+		printf("\nData Entered successfully.\n");
+	}
 }
 
 // 4. Length
@@ -135,11 +167,12 @@ void display() {
 		printf("\nLIST IS EMPTY!!\n");
 	}
 	else {
+		printf("\n");
 		while(temp != NULL) {
 			printf("%d->", temp->data);
 			temp = temp->link;
 		}
-		printf("\n\n");
+		printf("\n");
 	}
 }
 
@@ -148,7 +181,7 @@ void del() {
 	struct node* temp;
 	int loc;
 	
-	printf("Enter the node location you want to delete: ");
+	printf("\nEnter the node location you want to delete: ");
 	scanf("%d", &loc);
 	
 	if(loc > len()) {
@@ -161,6 +194,8 @@ void del() {
 		temp->link = NULL;
 		
 		free(temp);
+
+		printf("\nNode deleted.\n");
 	}
 	else {
 		struct node* p;
@@ -178,5 +213,7 @@ void del() {
 		q->link = p->link;
 		q->link = NULL;
 		free(q);
+
+		printf("\nNode deleted.\n");
 	}
 }
