@@ -69,7 +69,7 @@ void append() {
 	
 	temp = (struct node*)malloc(sizeof(struct node));
 	
-	printf("Enter node data: ");
+	printf("\nEnter node data: ");
 	scanf("%d", &temp->data);
 	temp->link = NULL;
 	
@@ -95,7 +95,7 @@ void add_at_begin() {
 	
 	temp = (struct node*)malloc(sizeof(struct node));
 	
-	printf("Enter node data: ");
+	printf("\nEnter node data: ");
 	scanf("%d", &temp->data);
 	temp->link = NULL;
 	
@@ -106,6 +106,8 @@ void add_at_begin() {
 		temp->link = root;
 		root = temp;
 	}
+
+	printf("\nNode added successfully.\n");
 }
 
 // 3. Add at after
@@ -113,7 +115,7 @@ void add_at_after() {
 	struct node* temp;
 	int loc, length;
 	
-	printf("Enter new node location: ");
+	printf("\nEnter new node location: ");
 	scanf("%d", &loc);
 	
 	length = len();
@@ -211,7 +213,7 @@ void del() {
 		
 		q = p->link;
 		q->link = p->link;
-		q->link = NULL;
+		p->link = NULL;
 		free(q);
 
 		printf("\nNode deleted.\n");
