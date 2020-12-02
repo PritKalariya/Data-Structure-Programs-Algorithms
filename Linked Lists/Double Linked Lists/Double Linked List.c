@@ -20,7 +20,8 @@ void main() {
 		printf("3. Add at after.\n");
 		printf("4. Length.\n");
 		printf("5. Display.\n");
-		printf("6. Exit.\n");
+		printf("6. Delete.\n");
+		printf("7. Exit.\n");
 		
 		printf("\nEnter you choice: ");
 		scanf("%d", &ch);
@@ -41,8 +42,11 @@ void main() {
 					
 			case 5: display();
 					break;
+				
+			case 6: del();
+					break;
 					
-			case 6: exit(0);
+			case 7: exit(0);
 			
 			default: printf("\nINVALID INPUT!!\n");
 		}
@@ -177,5 +181,72 @@ void display() {
 			temp = temp->right;
 		}
 		printf("\n");
+	}
+}
+
+// Case 6 
+void del() {
+	struct node *temp;
+	int loc, len;
+	
+	printf("Enter the location of the node you want to delete: ");
+	scanf("%d", &loc);
+	
+	len = length();
+	
+	if(loc > len) {
+		printf("\nINVALID LOCATION!!\n");
+		printf("\nThe list has only %d nodes.\n", len);
+	}
+	else if(loc == 1) {
+		temp = root;
+		
+		root = root->right;
+		root->left = NULL;
+		
+		free(temp);
+		
+		printf("\nFirst node deleted successfully.\n");
+	}
+	else if(loc == len) {
+		struct node *p;
+		struct node *q;
+		int i = 1;
+		
+		p = root;
+		
+		while(i < loc) {
+			p = p->right;
+			i++;
+		}
+		
+		q = p->left;
+		
+		q->right = NULL;
+		
+		free(p);
+		
+		printf("\nLast node delted successfully.\n");
+	}
+	else {
+		struct node *p;
+		struct node *q;
+		int i = 1;
+		
+		p = root;
+		
+		while(i < loc) {
+			p = p->right;
+			i++;
+		}
+		
+		q = p->left;
+		
+		p->right->left = q;
+		q->right = p->right;
+		
+		free(p);
+		
+		printf("\nNode deleted successfully.\n");
 	}
 }
