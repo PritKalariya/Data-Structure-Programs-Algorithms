@@ -31,7 +31,8 @@ void main() {
 		printf("4. Length\n");
 		printf("5. Display\n");
 		printf("6. Delete a node\n");
-		printf("7. Exit\n");
+		printf("7. Reverse\n");
+		printf("8. Exit\n");
 		
 		printf("Enter your choice: ");
 		scanf("%d", &ch);
@@ -47,7 +48,7 @@ void main() {
 					break;
 					
 			case 4: length = len();
-					printf("The length of the list is %d", length);
+					printf("\nThe length of the list is %d\n", length);
 					break;
 					
 			case 5: display();
@@ -55,8 +56,11 @@ void main() {
 					
 			case 6: del();
 					break;
+				
+			case 7: reverse();
+					break;
 					
-			case 7: exit(1);
+			case 8: exit(1);
 			
 			default: printf("\nINVALID INPUT!!\n");
 		}
@@ -69,7 +73,7 @@ void append() {
 	
 	temp = (struct node*)malloc(sizeof(struct node));
 	
-	printf("\nEnter node data: ");
+	printf("Enter node data: ");
 	scanf("%d", &temp->data);
 	temp->link = NULL;
 	
@@ -87,6 +91,8 @@ void append() {
 		
 		p->link = temp;
 	}
+	
+	printf("\nData entered successfully.\n");
 }
 
 // 2. Add at Begin
@@ -95,7 +101,7 @@ void add_at_begin() {
 	
 	temp = (struct node*)malloc(sizeof(struct node));
 	
-	printf("\nEnter node data: ");
+	printf("Enter node data: ");
 	scanf("%d", &temp->data);
 	temp->link = NULL;
 	
@@ -112,19 +118,17 @@ void add_at_begin() {
 
 // 3. Add at after
 void add_at_after() {
-	struct node* temp;
-	int loc, length;
+	struct node *temp;
+	int loc;
 	
-	printf("\nEnter new node location: ");
+	printf("Enter new node location: ");
 	scanf("%d", &loc);
 	
-	length = len();
-	
-	if(loc > length) {
+	if(loc > len()) {
 		printf("\nINVALID LOCATION\n");
 	}
 	else {
-		struct node* p;
+		struct node *p;
 		int i = 1;
 		
 		p = root;
@@ -134,7 +138,9 @@ void add_at_after() {
 			i++;
 		}
 		
-		printf("\nEnter node data: ");
+		temp = (struct node*)malloc(sizeof(struct node));
+		
+		printf("Enter node data: ");
 		scanf("%d", &temp->data);
 		temp->link = NULL;
 		
@@ -152,7 +158,7 @@ int len() {
 	struct node* temp;
 	temp = root;
 	
-	while(temp->link != NULL) {
+	while(temp != NULL) {
 		count++;
 		temp = temp->link;
 	}
@@ -171,7 +177,7 @@ void display() {
 	else {
 		printf("\n");
 		while(temp != NULL) {
-			printf("%d->", temp->data);
+			printf("%d\t", temp->data);
 			temp = temp->link;
 		}
 		printf("\n");
@@ -183,7 +189,7 @@ void del() {
 	struct node* temp;
 	int loc;
 	
-	printf("\nEnter the node location you want to delete: ");
+	printf("Enter the node location you want to delete: ");
 	scanf("%d", &loc);
 	
 	if(loc > len()) {
@@ -197,7 +203,29 @@ void del() {
 		
 		free(temp);
 
-		printf("\nNode deleted.\n");
+		printf("\nFirst node deleted successfully.\n");
+	}
+	else if(loc == len()) {
+		struct node *p, *q;
+		int i = 1, j = 1;
+		
+		p = q = root;
+		
+		while(i < loc) {
+			p = p->link;
+			i++;
+		}
+		
+		while(j < loc - 1) {
+			q = q->link;
+			j++;
+		}
+		
+		q->link = NULL;
+		
+		free(p);
+		
+		printf("\nLast node deleted successfully.\n");
 	}
 	else {
 		struct node* p;
@@ -206,7 +234,7 @@ void del() {
 		
 		p = root;
 		
-		while(i < loc-1) {
+		while(i < loc) {
 			p = p->link;
 			i++;
 		}
@@ -216,6 +244,40 @@ void del() {
 		p->link = NULL;
 		free(q);
 
-		printf("\nNode deleted.\n");
+		printf("\nNode deleted successfully.\n");
 	}
+}
+
+// 7. Reverse
+void reverse() {
+	struct node *p, *q;
+	int i, j, k, temp, length;
+	
+	length = len();
+	
+	i = 0;
+	j = length - 1;
+	p = q = root;
+	
+	while(i < j) {
+		k = 0;
+		
+		// pointing the *q to the last node
+		while(k < j) {
+			q = q->link;
+			k++;
+		}
+		
+		// Shifting the elements
+		temp = p->data;
+		p->data = q->data;
+		q->data = temp;
+		
+		i++;
+		q--;
+		p = p->link; // Shifting the pointer to the right
+		q = root; // reassigning to root to make it point to 2nd last node using while(k<j)
+	}
+	
+	printf("\nNode successfully reversed.\n");
 }
