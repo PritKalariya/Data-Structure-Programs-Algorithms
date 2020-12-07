@@ -37,6 +37,32 @@ void main()
 	traverse();
 	delete (50);
 	traverse();
+
+void main() {
+	int ch;
+	
+	while(1) {
+		printf("\nMenu\n");
+		printf("1. Insert\n");
+		printf("2. Delete\n");
+		printf("3. Exit\n");
+		
+		printf("Enter your choice: ");
+		scanf("%d", &ch);
+		
+		switch(ch) {
+			case 1: insert();
+					break;
+					
+			case 2: del();
+					break;
+					
+			case 3: exit(0);
+			
+			default: printf("\nINVALID INPUT!!\n");
+		}	
+	}
+
 }
 
 void insert()
@@ -83,6 +109,8 @@ void insert()
 			p->left = t;
 		}
 	}
+	
+	printf("\nData entered successfully.\n");
 }
 
 void delete (int data)
@@ -177,5 +205,40 @@ void traverseInorder(struct node *node)
 	if (node->right)
 	{
 		traverseInorder(node->right);
+	}
+}
+
+void del() {
+	struct node *cur; // target/current node
+	struct node *p; // parent
+	int ele;
+	
+	printf("Enter the element you want to delete: ");
+	scanf("%d", &ele);
+	
+	if(root == NULL) {
+		printf("\nTree is empty!!\n");
+		return;
+	}
+	
+	// parent node is the one to which the child is attached to
+	// current is the child node (to be deleted)
+	// travelling till the parent and child node
+	while(ele) {
+		p = cur;
+		
+		if(ele < cur->data) {
+			cur = cur->left;
+		}
+		else {
+			cur = cur->right;
+		}
+	}
+	
+	// Case1: Having no child
+	if(cur->left == NULL && cur->right == NULL) {
+		p->left = NULL;
+		printf("\n%d deleted successfully.\n", cur->data);
+		free(cur);
 	}
 }
